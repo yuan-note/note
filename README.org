@@ -19,11 +19,35 @@
 #+OPTIONS: toc:3 num:nil
 #+STARTUP: showall
 
-* Emacs 基础语法
-** 基础语法
- - a
- - b
-** 宏编辑
- - 1
- - 2
- - 3
+
+* Emacs
+** 编程入门
+*** 列表处理
+- 在lisp中，所有用双引号括起来的文本，包括标点符号和空格，都是单个原子。
+- 任何列表都是一个准备运行的程序。
+- “'” 被称作一个引用（quote）,当单引号位于一个列表之前时，它告诉lisp不要对这个列表做任何操作，仅仅是按其原样，但是如何一个列表前面没有引号，这个列表中的第一个符号就是一条计算机要执行的命令（在lisp中，这些命令被称作函数）
+#+BEGIN_SRC elisp
+
+(+ 2 2)
+
+'(this is a quoted list)
+
+(substring "The quick brown for jump" 9 19)
+
+#+END_SRC
+
+- 解释器，从里往外，从左往右逐一往外解释执行。
+
+- 给一个变量赋值 set 和 setq
+#+BEGIN_SRC elisp
+
+  (set 'flowers '(rose viloat a b))
+  ;; 两种效果是一样的
+  (setq flowers '(rose viloat a b))
+
+(setq count 0)
+(setq count (+ count 1))
+
+(message "count is %s" count)
+
+#+END_SRC
