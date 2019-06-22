@@ -82,44 +82,44 @@
 
 *** 如何编写函数定义
     - 函数定义
-    1) 符号名，这是函数定义将要依附的符号
-    2) 参数列表，如果没有任何参量，就是一个空列表。
-    3) 描述这个函数的文档。(C-h f 可以查看到的文档说明。这部分是可选的，推荐使用)
-    4) 一个使用函数成为交互函数的表达式，这是可选的。(可以通过M-x 和函数名来使用它或者键入一个适当的键、键序列来使用它)
-    5) 函数主体
+      1) 符号名，这是函数定义将要依附的符号
+      2) 参数列表，如果没有任何参量，就是一个空列表。
+      3) 描述这个函数的文档。(C-h f 可以查看到的文档说明。这部分是可选的，推荐使用)
+      4) 一个使用函数成为交互函数的表达式，这是可选的。(可以通过M-x 和函数名来使用它或者键入一个适当的键、键序列来使用它)
+      5) 函数主体
 
-    #+BEGIN_SRC elisp
-  ;; 定义语法
-  (defun function-name (arguments...)
-  "optional decument..."
-  (interactive argument-passing-info)     ;optional
-  body...)
+         #+BEGIN_SRC elisp
+      ;; 定义语法
+      (defun function-name (arguments...)
+      "optional decument..."
+      (interactive argument-passing-info)     ;optional
+      body...)
 
-    #+END_SRC
+         #+END_SRC
 
-    #+BEGIN_SRC elisp
+         #+BEGIN_SRC elisp
 
-        ;; 简单实例
+            ;; 简单实例
 
-      (defun one-2-number (number)            ;定义函数
-      "1 加其它一个数"
-      (+ 1 number))
+          (defun one-2-number (number)            ;定义函数
+          "1 加其它一个数"
+          (+ 1 number))
 
-      (one-2-number 4)                        ; 5
+          (one-2-number 4)                        ; 5
 
-    #+END_SRC
+         #+END_SRC
 
-    #+BEGIN_SRC elisp
-    ;; 交互式函数
+         #+BEGIN_SRC elisp
+        ;; 交互式函数
 
-  (defun add-by-serven (number)
-  "add by sever function"
-  (interactive "p")                       ;定义交互式函数,可以使用 C-u 把数据传递给此函数，具体参数和使用参考《GUN Emacs Lisp 技术手册》
-  (message "The result is %d" (+ 7 number)))
+      (defun add-by-serven (number)
+      "add by sever function"
+      (interactive "p")                       ;定义交互式函数,可以使用 C-u 把数据传递给此函数，具体参数和使用参考《GUN Emacs Lisp 技术手册》
+      (message "The result is %d" (+ 7 number)))
 
-  (add-by-serven 98)
+      (add-by-serven 98)
 
-    #+END_SRC
+         #+END_SRC
 
     - let 函数定义局部变量
       let 一共有3个部分列表。1, let表达式就是第一个部分。2,变量列表，这个列表的每个元素是一个符号或者一个两元素的列表，它的第一个元素一定是一个符号。3,let表达主体，这个主体由一个或者多个列表组成。
@@ -128,45 +128,44 @@
 
       #+BEGIN_SRC elisp
 
-      (let ((variable value) (varialbe value) ...) body...)
+          (let ((variable value) (varialbe value) ...) body...)
       #+END_SRC
 
       #+BEGIN_SRC elisp
 
-        (let ((arg1 "zhangsan") (arg2 "lisi"))
-        (message "print arg1 is %s,arg2 is %s" arg1 arg2)) ;"print arg1 is zhangsan,arg2 is lisi"
+            (let ((arg1 "zhangsan") (arg2 "lisi"))
+            (message "print arg1 is %s,arg2 is %s" arg1 arg2)) ;"print arg1 is zhangsan,arg2 is lisi"
 
-        (let ((arg1 "arch linux") test1 test2 (args2 "ubuntu"))
-        (message "all list is %s,%s,%s,%s" arg1 test1 test2 args2)) ;"all list is arch linux,nil,nil,ubuntu"
+            (let ((arg1 "arch linux") test1 test2 (args2 "ubuntu"))
+            (message "all list is %s,%s,%s,%s" arg1 test1 test2 args2)) ;"all list is arch linux,nil,nil,ubuntu"
       #+END_SRC
+    - if 特殊表
+      1) if 表达式
+         #+BEGIN_SRC elisp
+           ;; 语法
+           (if true-or-false-test
+           action-todo)
 
-      - if 特殊表
-        1) if 表达式
-           #+BEGIN_SRC elisp
-             ;; 语法
-             (if true-or-false-test
-             action-todo)
+           ;; 事例
+           (if (> 5 4)
+           (message "5 is grater then 4!"))
+         #+END_SRC
 
-             ;; 事例
-             (if (> 5 4)
-             (message "5 is grater then 4!"))
-           #+END_SRC
+         2) if-then-else 表达式
+            #+BEGIN_SRC elisp
+              ;; 语法
+              (if true-or-false-test
+              true-todo false-todo)
+              ;; 事例
+              (if (> 4 5) (message "5 is grater then 4!") (message "4 is not grater then 5"))
+            #+END_SRC
+    - Lisp 中的真与假
+      1) 在 lisp 中用 t 表示 真。 nil 这个符号有两种意思：第一，它表示一个空列表。第二，表示“假”。
+         注意：在Lisp 解释器眼里，() 和 nil 是相同的。但是人类却倾向用 nil 代表 “假”，用()代表空列表。
+         #+BEGIN_SRC elisp
 
-           2) if-then-else 表达式
-              #+BEGIN_SRC elisp
-                ;; 语法
-                (if true-or-false-test
-                true-todo false-todo)
-                ;; 事例
-                (if (> 4 5) (message "5 is grater then 4!") (message "4 is not grater then 5"))
-              #+END_SRC
-        - Lisp 中的真与假
-          1) 在 lisp 中用 t 表示 真。 nil 这个符号有两种意思：第一，它表示一个空列表。第二，表示“假”。
-             注意：在Lisp 解释器眼里，() 和 nil 是相同的。但是人类却倾向用 nil 代表 “假”，用()代表空列表。
-                #+BEGIN_SRC elisp
-
-                  ;; eg
-                  (if 4 'true 'false)
-                  (if nil 'true 'false)
-                #+END_SRC
-        - save-excursion 函数
+              ;; eg
+              (if 4 'true 'false)
+              (if nil 'true 'false)
+         #+END_SRC
+    - save-excursion 函数
