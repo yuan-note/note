@@ -105,6 +105,39 @@
       "1 加其它一个数"
       (+ 1 number))
 
-      (one-2-number 4)
+      (one-2-number 4)                        ; 5
 
     #+END_SRC
+
+    #+BEGIN_SRC elisp
+    ;; 交互式函数
+
+  (defun add-by-serven (number)
+  "add by sever function"
+  (interactive "p")                       ;定义交互式函数,可以使用 C-u 把数据传递给此函数，具体参数和使用参考《GUN Emacs Lisp 技术手册》
+  (message "The result is %d" (+ 7 number)))
+
+  (add-by-serven 98)
+
+    #+END_SRC
+
+    - let 函数定义局部变量
+      let 一共有3个部分列表。1, let表达式就是第一个部分。2,变量列表，这个列表的每个元素是一个符号或者一个两元素的列表，它的第一个元素一定是一个符号。3,let表达主体，这个主体由一个或者多个列表组成。
+      let 表达式模板如下所示：
+      (let varlist body...)
+
+      #+BEGIN_SRC elisp
+
+      (let ((variable value) (varialbe value) ...) body...)
+
+      #+END_SRC
+
+      #+BEGIN_SRC elisp
+
+        (let ((arg1 "zhangsan") (arg2 "lisi"))
+        (message "print arg1 is %s,arg2 is %s" arg1 arg2)) ;"print arg1 is zhangsan,arg2 is lisi"
+
+        (let ((arg1 "arch linux") test1 test2 (args2 "ubuntu"))
+        (message "all list is %s,%s,%s,%s" arg1 test1 test2 args2)) ;"all list is arch linux,nil,nil,ubuntu"
+
+      #+END_SRC
