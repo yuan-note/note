@@ -5,7 +5,7 @@
 
 #+HTML_HEAD: <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 #+HTML_HEAD: <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
- # #+HTML_HEAD: <script type="text/javascript" src="readtheorg/js/jquery.stickytableheaders.js"></script> // www.pirilamp.org/styles/lib/js/jquery.stickytableheaders.js 404 Now
+# #+HTML_HEAD: <script type="text/javascript" src="readtheorg/js/jquery.stickytableheaders.js"></script> // www.pirilamp.org/styles/lib/js/jquery.stickytableheaders.js 404 Now
 #+HTML_HEAD: <script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-table-headers/0.1.19/js/jquery.stickytableheaders.min.js"></script>
 #+HTML_HEAD: <script type="text/javascript" src="readtheorg/js/readtheorg.js"></script>
 #+HTML_HEAD: <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/highlight.min.js"></script>
@@ -23,10 +23,10 @@
 * Emacs
 ** 编程入门
 *** 列表处理
-- 在lisp中，所有用双引号括起来的文本，包括标点符号和空格，都是单个原子。
-- 任何列表都是一个准备运行的程序。
-- “'” 被称作一个引用（quote）,当单引号位于一个列表之前时，它告诉lisp不要对这个列表做任何操作，仅仅是按其原样，但是如何一个列表前面没有引号，这个列表中的第一个符号就是一条计算机要执行的命令（在lisp中，这些命令被称作函数）
-#+BEGIN_SRC elisp
+    - 在lisp中，所有用双引号括起来的文本，包括标点符号和空格，都是单个原子。
+    - 任何列表都是一个准备运行的程序。
+    - “'” 被称作一个引用（quote）,当单引号位于一个列表之前时，它告诉lisp不要对这个列表做任何操作，仅仅是按其原样，但是如何一个列表前面没有引号，这个列表中的第一个符号就是一条计算机要执行的命令（在lisp中，这些命令被称作函数）
+    #+BEGIN_SRC elisp
 
 (+ 2 2)
 
@@ -34,12 +34,12 @@
 
 (substring "The quick brown for jump" 9 19)
 
-#+END_SRC
+    #+END_SRC
 
-- 解释器，从里往外，从左往右逐一往外解释执行。
+    - 解释器，从里往外，从左往右逐一往外解释执行。
 
-- 给一个变量赋值 set 和 setq
-#+BEGIN_SRC elisp
+    - 给一个变量赋值 set 和 setq
+    #+BEGIN_SRC elisp
 
   (set 'flowers '(rose viloat a b))
   ;; 两种效果是一样的
@@ -50,12 +50,12 @@
 
 (message "count is %s" count)
 
-#+END_SRC
+    #+END_SRC
 
 *** 求值实践
-- 相关操作缓冲区的函数
+    - 相关操作缓冲区的函数
 
-#+BEGIN_SRC elisp
+    #+BEGIN_SRC elisp
 
   (buffer-name)                           ; 获取文件名
 
@@ -66,11 +66,11 @@
   (other-buffer)                          ;最近使用过的缓冲区
 
   (switch-to-buffer (other-buffer))       ;用来切换到其它某个缓冲区
-#+END_SRC
+    #+END_SRC
 
-- 定位相关函数
+    - 定位相关函数
 
-#+BEGIN_SRC elisp
+    #+BEGIN_SRC elisp
   (buffer-size)                           ;显示buffer 大小，返回当前缓冲区中字符数据计数
 
   (point)                                 ;光标所在当位置即：'位点'。从这个缓冲区首字符开始到光标所在位置之间的字符数据。
@@ -78,4 +78,33 @@
   (point-min)                             ;当前缓冲区位点的最小可能值，这个值一般都是1。
 
   (point-max)                             ;当前缓冲区位点的最大可能值
-#+END_SRC
+    #+END_SRC
+
+*** 如何编写函数定义
+    - 函数定义
+    1) 符号名，这是函数定义将要依附的符号
+    2) 参数列表，如果没有任何参量，就是一个空列表。
+    3) 描述这个函数的文档。(C-h f 可以查看到的文档说明。这部分是可选的，推荐使用)
+    4) 一个使用函数成为交互函数的表达式，这是可选的。(可以通过M-x 和函数名来使用它或者键入一个适当的键、键序列来使用它)
+    5) 函数主体
+
+    #+BEGIN_SRC elisp
+  ;; 定义语法
+  (defun function-name (arguments...)
+  "optional decument..."
+  (interactive argument-passing-info)     ;optional
+  body...)
+
+    #+END_SRC
+
+    #+BEGIN_SRC elisp
+
+        ;; 简单实例
+
+      (defun one-2-number (number)            ;定义函数
+      "1 加其它一个数"
+      (+ 1 number))
+
+      (one-2-number 4)
+
+    #+END_SRC
