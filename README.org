@@ -129,7 +129,6 @@
       #+BEGIN_SRC elisp
 
       (let ((variable value) (varialbe value) ...) body...)
-
       #+END_SRC
 
       #+BEGIN_SRC elisp
@@ -139,5 +138,37 @@
 
         (let ((arg1 "arch linux") test1 test2 (args2 "ubuntu"))
         (message "all list is %s,%s,%s,%s" arg1 test1 test2 args2)) ;"all list is arch linux,nil,nil,ubuntu"
-
       #+END_SRC
+
+      - if 特殊表
+        1) if 表达式
+           #+BEGIN_SRC elisp
+             ;; 语法
+             (if true-or-false-test
+             action-todo)
+
+             ;; 事例
+             (if (> 5 4)
+             (message "5 is grater then 4!"))
+           #+END_SRC
+
+           2) if-then-else 表达式
+              #+BEGIN_SRC elisp
+                ;; 语法
+                (if true-or-false-test
+                true-todo false-todo)
+                ;; 事例
+                (if (> 4 5) (message "5 is grater then 4!") (message "4 is not grater then 5"))
+              #+END_SRC
+
+              - Lisp 中的真与假
+                1) 在 lisp 中用 t 表示 真。 nil 这个符号有两种意思：第一，它表示一个空列表。第二，表示“假”。
+                   注意：在Lisp 解释器眼里，() 和 nil 是相同的。但是人类却倾向用 nil 代表 “假”，用()代表空列表。
+                #+BEGIN_SRC elisp
+
+                  ;; eg
+                  (if 4 'true 'false)
+                  (if nil 'true 'false)
+                #+END_SRC
+
+                - save-excursion 函数
