@@ -168,3 +168,25 @@
               (if nil 'true 'false)
          #+END_SRC
     - save-excursion 函数
+      1) 位点： 光标所处的当前位置。
+
+      2) 标记： 缓冲区的另外一个位置，设置的标记点。
+         技巧： 设置一个标记，可以用命令C-x C-x (exehange-point-and-mark)使光标从位点跳到标记处，并将光标的位置设置成一个标记。
+         如何设置了另外一个标记，原来标记的位置就被保存在标记环中。
+
+      3) 域： 位点和标记之间的缓冲区。
+
+      4) save-excursion 特殊表将位点和标记的当前位置保存起来，并当特殊表主体代码由Lisp解释器执行完毕之后恢复原来的位点和标记的位置。
+         #+BEGIN_SRC elisp
+
+           ;; save-excursion 表达式模板
+           (save-excursion
+             body...)
+           ;; 详细地说：save-excursion 表达式的模板如下
+           (save-excursion
+             first-in-body
+             second-in-body
+             third-in-body
+             ...
+             last-in-body)
+         #+END_SRC
