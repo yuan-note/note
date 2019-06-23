@@ -208,11 +208,9 @@
           (goto-char (point-max)))
 
       #+END_SRC
-
-      - describe-function 命令提示符可以调出查询函数帮助文档
-
-      - mark-whole-buffer 函数实现对 buffer 全选功能
-        #+BEGIN_SRC elisp
+    - describe-function 命令提示符可以调出查询函数帮助文档
+    - mark-whole-buffer 函数实现对 buffer 全选功能
+       #+BEGIN_SRC elisp
           ;; 实现对 buffer 全选功能
           (defun my-mark-whole-buffer ()
           "put point at beginning and mark at end of buffer"
@@ -223,10 +221,8 @@
           (goto-char (point-min)))
 
           (my-mark-whole-buffer)
-
         #+END_SRC
-
-      - append-to-buffer 函数实现
+    - append-to-buffer 函数实现
         #+BEGIN_SRC elisp
           ;; 实现从当前缓冲区拷贝一个域到一个指定的缓冲区。
           (defun my-append-to-buffer (buffer begin end) ;这些参数中,buffer 指拷贝文本的目的缓冲区，begin,end指将被拷贝的当前缓冲区指定域的起始和终止位点。
