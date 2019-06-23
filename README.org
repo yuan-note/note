@@ -12,8 +12,8 @@
 #+HTML_HEAD: <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/languages/lisp.min.js"></script>
 #+HTML_HEAD: <script>hljs.initHighlightingOnLoad();</script>
 
-#+AUTHOR: 张园园
-#+CREATOR: 张园园
+#+AUTHOR: yuanyuan.zhang
+#+CREATOR: yuanyuan.zhang
 #+TITLE: 我的笔记
 #+EMAIL: zhyyituse@163.com
 #+OPTIONS: toc:3 num:nil
@@ -151,13 +151,13 @@
            (message "5 is grater then 4!"))
          #+END_SRC
       2) if-then-else 表达式
-       #+BEGIN_SRC elisp
+         #+BEGIN_SRC elisp
                   ;; 语法
                   (if true-or-false-test
                   true-todo false-todo)
                   ;; 事例
                   (if (> 4 5) (message "5 is grater then 4!") (message "4 is not grater then 5"))
-       #+END_SRC
+         #+END_SRC
     - Lisp 中的真与假
       1) 在 lisp 中用 t 表示 真。 nil 这个符号有两种意思：第一，它表示一个空列表。第二，表示“假”。
          注意：在Lisp 解释器眼里，() 和 nil 是相同的。但是人类却倾向用 nil 代表 “假”，用()代表空列表。
@@ -190,3 +190,50 @@
              ...
              last-in-body)
          #+END_SRC
+
+*** 与缓冲区有关的函数
+    - 实现简化版本的 beginning-of-buffer 函数
+      #+BEGIN_SRC elisp
+        ;; 实现把光标移到 开始位置
+        (defun simple-beginning-of-buffer ()
+          "move point to the beginning of the buffer"
+          (interactive)
+          (push-mark (point))
+          (goto-char (point-min)))
+        ;; 实现把光标移动到最下面
+          (defun simple-end-of-buffer ()
+          "mve point to the end of the buffer"
+          (interactive)
+          (push-mark (point))
+          (goto-char (point-max)))
+
+      #+END_SRC
+
+      - describe-function 命令提示符可以调出查询函数帮助文档
+
+      - mark-whole-buffer 函数实现对 buffer 全选功能
+        #+BEGIN_SRC elisp
+          ;; 实现对 buffer 全选功能
+          (defun my-mark-whole-buffer ()
+          "put point at beginning and mark at end of buffer"
+          (interactive)
+          (push-mark (point))
+          (set-mark (point-max))
+          (push-mark (point-max))
+          (goto-char (point-min)))
+
+          (my-mark-whole-buffer)
+
+        #+END_SRC
+
+      - append-to-buffer 函数实现
+        #+BEGIN_SRC elisp
+          ;; 实现从当前缓冲区拷贝一个域到一个指定的缓冲区。
+          (defun my-append-to-buffer (buffer begin end) ;这些参数中,buffer 指拷贝文本的目的缓冲区，begin,end指将被拷贝的当前缓冲区指定域的起始和终止位点。
+            "实现一个 append-to-buffer 函数"
+            (interactive "BAppend to buffer: \nr") ; \n 将形参分成两个部分，第一部分放在buffer变量中,第二部分就是 "r"。"r" 代表 (start 和 end) 绑定到位点和标记值上。
+            (let ((oldbuf (current-buffer)))
+            (save-excursion                       ;用来保存当前位点和标记，执行完成下面的程序后返回原来的位点和标记
+              (set-buffer (get-buffer-create buffer)) ; set-buffer 将Emacs 的注意力转移到文本将要拷贝到的目的缓冲区。get-buffer-create buffer 如何有的话，用原来的，没有重新创建一个。
+              (insert-buffer-substring oldbuf begin end)))) ; 当来自一个缓冲区的文本域拷贝到当前缓冲区。
+        #+END_SRC
