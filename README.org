@@ -233,3 +233,41 @@
               (set-buffer (get-buffer-create buffer)) ; set-buffer 将Emacs 的注意力转移到文本将要拷贝到的目的缓冲区。get-buffer-create buffer 如何有的话，用原来的，没有重新创建一个。
               (insert-buffer-substring oldbuf begin end)))) ; 当来自一个缓冲区的文本域拷贝到当前缓冲区。
         #+END_SRC
+
+*** 复杂的函数
+- copy-to-buffer 函数,把选中的文本 copy 到另一个 buffer中，另一个buffer以前的内容会被清空
+#+BEGIN_SRC elisp
+
+  (defun my-copy-to-buffer (buffer begin end)
+    "impl copy-to-buffer function"
+    (interactive "B Copy to buffer \nr")
+    (let ((oldbuf (current-buffer)))
+      (save-excursion
+        (set-buffer (get-buffer-create buffer))
+        (erase-buffer)                    ; 清除当前缓冲区文本
+        (insert-buffer-substring oldbuf begin end))))
+
+#+END_SRC
+
+- insert-buffer 将另外一个缓冲区中的所有内容拷贝到当前缓冲区中
+
+#+BEGIN_SRC elisp
+
+  (defun my-insert-buffer (buffer)
+    "imple my insert buffer function"
+    (interactive "*b select insert buffer") ; * 表示如果缓冲区是只读的就直接报错 。b:表示一个存在的缓冲区，或者缓冲区名字。(B:缓冲区的名字，可以存在也可以不存在)
+    (or (bufferp buffer) (setq buffer (get-buffer buffer))) ;or 函数遇到 t 就不向下执行了
+    (let (start end newmark)
+      (save-excursion                     ;这里两次使用了 save-excursion 里面一层让他返回原来的 buffer缓存区，外面的一层返回原来的 位点处。
+        (save-excursion
+          (set-buffer buffer)
+          (setq start (point-min) end (point-max)))
+        (insert-buffer-substring buffer start end)
+        (setq newmark (point)))
+      (push-mark newmark)))
+
+#+END_SRC
+
+- 可选参数 $optinal (一个参数跟在&optional 这个关键词后面，当调用这个函数时可以不传值)
+
+- beginning-of-buffer 函数
