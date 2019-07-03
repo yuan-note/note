@@ -271,3 +271,16 @@
 - 可选参数 $optinal (一个参数跟在&optional 这个关键词后面，当调用这个函数时可以不传值)
 
 - beginning-of-buffer 函数
+
+#+BEGIN_SRC elisp
+
+  (defun my-beginning-of-buffer (&optional arg)
+    (interactive "P")
+    (goto-char (if arg                    ;如何有参数的情况下，判断整个文本内容是否超过10000行。采用不同的方式计算要跳转的行数
+                   (if (> (buffer-size) 10000)
+                       (* arg (/ (buffer-size) 10))
+                     (/ (* (buffer-size) (prefix-numeric-value arg)) 10))
+                 (point-min)))
+    (if arg (forward-line 1)))            ;向下移动一行
+
+#+END_SRC
